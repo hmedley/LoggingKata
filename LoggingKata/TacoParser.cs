@@ -13,18 +13,13 @@ namespace LoggingKata
     /// </summary>
     public class TacoParser
     {
-        public TacoParser()
-        {
-
-        }
-
         private static readonly ILog Logger =
             LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public ITrackable Parse(string line)
         {
             var listOfTacoBell = line.Split(',');
-            if (listOfTacoBell.Length <= 3)
+            if (listOfTacoBell.Length < 3)
             {
                 Logger.Error("Must have at least three items in the array");
                 return null;
@@ -48,7 +43,7 @@ namespace LoggingKata
 
             var tB = new TacoBell
             {
-                Name = listOfTacoBell[2],
+                Name = listOfTacoBell[2].Split('.')[0].Replace("/","").Replace("\"",""),
                 Location = new Point
                 {
                     Longitude = lon,
